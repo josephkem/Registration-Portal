@@ -1,8 +1,22 @@
+require('dotenv').config();
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const mongoose = require('mongoose');
 
 
 const app = express();
+
+//Database connection
+mongoose.connect(process.env.DATABASE, { useMongoClient: true });
+mongoose.Promise = global.Promise;
+mongoose.connection
+  .on('connected', () => {
+    console.log(`Mongoose connection open on ${process.env.DATABASE}`);
+  })
+  .on('error', (err) => {
+    console.log(`Connection error: ${err.message}`);
+  });
+
 
 //EJS
 app.use(expressLayouts);
