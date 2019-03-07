@@ -23,11 +23,18 @@ router.post('/register', (req,res)=> {
     }
 
     //Validate password length
-    if(password.legth <6) {
+    if(password.length <6) {
         errors.push( { msg: 'Password should be at least 6 characters'} );
     }
 
-    if (errors.legth > 0) {
+    if (errors.length > 0) {
+        res.render('register', {
+            errors,
+            name,
+            email,
+            password,
+            password2
+        });
 
     } else {
         res.send('pass');
