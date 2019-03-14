@@ -4,9 +4,13 @@ const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
+const passport = require('passport');
 
 
 const app = express();
+
+//Passport config
+require('./config/passport')(passport);
 
 //Database connection
 mongoose.connect(process.env.DATABASE, { useMongoClient: true });
@@ -33,6 +37,9 @@ app.use(session ({
     resave: true,
     saveUninitialized: true
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Connect flash
 app.use(flash());
